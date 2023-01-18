@@ -16,15 +16,21 @@ tree = app_commands.CommandTree(client)
   app_commands.Choice(name='days', value="days")
 ])
 async def remind(interaction:discord.Interaction ,prompt:str,time_type:app_commands.Choice[str], value:app_commands.Range[int, 1]):
-    await interaction.response.defer(ephemeral=True)
-    if time_type == "minitues":
+    message = await interaction.response.defer(ephemeral=True )
+    await interaction.followup.send(f"I'll wake you up in {value} {time_type.value}",ephemeral=True)
+    if time_type.value == "minitues":
         value = value * 60 
-    elif time_type == "hours":
-        value = value * 60 * 60
-    elif time_type == "days":
+    elif time_type.value == "hours":
+        value = value * 60 * 60 
+    elif time_type.value == "days":
         value = value * 60 * 60 * 24
+    message = await interaction.original_response()
+    await loops(ids=message.channel.id ,ment=interaction.user.id,words=prompt ,value=value)
+
+async def loops(ids ,ment ,words ,value):
     await asyncio.sleep(value)
-    await interaction.followup.send(prompt,ephemeral=True)
+    channel = client.get_channel(ids)
+    await channel.send(f"Wake up <@{ment}>! \n\nThis your notes : {words}")
 
 @client.event
 async def on_ready():
