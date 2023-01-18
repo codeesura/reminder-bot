@@ -1,5 +1,4 @@
-# reminder-bot
-reminder bot 
+# Reminder-bot
 
 This code uses the Discord API and the asyncio library to create a reminder bot that can be called through the Discord app. The bot uses the "remind" command, which allows a user to input a description of the reminder, the duration of the reminder (in minutes, hours, or days), and a value for the duration. The bot then sends a message confirming the reminder, and uses the asyncio.sleep function to wait for the specified duration before sending the reminder message. The bot also uses the discord.Interaction and discord.app_commands libraries to handle the command input and validation. The bot is run using a token, which is required for the bot to connect to the Discord API.
 
